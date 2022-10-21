@@ -2,7 +2,7 @@ node('built-in')
 {
     stage('Continous Download') 
     	{
-    	git 'https://github.com/sunildevops77/maven.git'
+    	git 'https://github.com/AbdulMuq1990/Pipeline-muq-jenkinsfile.git'
     	}
     	
     stage('Continous Build') 
