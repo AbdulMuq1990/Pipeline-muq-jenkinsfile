@@ -2,9 +2,6 @@ pipeline {
   agent any
   stages {
     stage('Production-deployment') {
-      when {
-        branch '*'
-      }
       environment {
         KUBE_CONFIG = credentials('kubeconfig-es-simulation-prod')
       }
