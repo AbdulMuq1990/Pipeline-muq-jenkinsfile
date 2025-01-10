@@ -6,10 +6,6 @@ pipeline {
       when {
         branch 'main' 
       }
-     // environment {
-     //   KUBE_CONFIG = credentials('kubeconfig-prod')
-        // DOCKER_IMAGE_TAG = "${appVersion}-production-${env.BUILD_NUMBER}"
-      //}
       steps {
         script {
           // Adding a manual approval step with Yes and No options
