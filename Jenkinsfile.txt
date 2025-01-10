@@ -1,28 +1,5 @@
-node('built-in') 
-{
-    stage('Continous Download') 
-    	{
-    	git 'https://github.com/AbdulMuq1990/Pipeline-muq-jenkinsfile.git'
-    	}
-    	
-    stage('Continous Build') 
-    	{
-    	sh 'mvn package'
-    	}
-    	
-     stage('Continous Deployment') 
-    	{
-      sh 'scp  /home/ubuntu/.jenkins/workspace/pipeline_muq/webapp/target/webapp.war  ubuntu@172.31.11.1:/opt/apache-tomcat-8.5.83/webapps/muq.war'
-    	}
-    	
-     stage('Continous Testing') 
-    	{
-    	sh 'echo "Testing Passed"'
-    	}
-    	
-     stage('Continous Delivery')
-    	{
-      sh 'scp  /home/ubuntu/.jenkins/workspace/pipeline_muq/webapp/target/webapp.war  ubuntu@172.31.11.14:/opt/apache-tomcat-8.5.83/webapps/prod.war'
-    	}
+Pipeline {
+    agent any
+
 
 }
