@@ -27,9 +27,9 @@ pipeline {
             sh """
               echo "DOCKER_IMAGE_TAG in Production-deployment: ${env.DOCKER_IMAGE_TAG}" 
               echo "ecrRepoUrl in Production-deployment: ${env.ecrRepoUrl}" 
-              sed -i "s#123456786523.dkr.ecr.us-west-2.amazonaws.com/sim-ecr:<image-tag>#${env.ecrRepoUrl}:${env.DOCKER_IMAGE_TAG}#g" k8s-manifests/deployment-prod.yml  
+              #sed -i "s#123456786523.dkr.ecr.us-west-2.amazonaws.com/sim-ecr:<image-tag>#${env.ecrRepoUrl}:${env.DOCKER_IMAGE_TAG}#g" k8s-manifests/deployment-prod.yml  
 
-              /opt/kubectleks/kubectl --kubeconfig $KUBE_CONFIG apply -f k8s-manifests/deployment-prod.yml
+              #/opt/kubectleks/kubectl --kubeconfig $KUBE_CONFIG apply -f k8s-manifests/deployment-prod.yml
             """
           } else {
             echo "User did not approve the deployment. Skipping production deployment."
