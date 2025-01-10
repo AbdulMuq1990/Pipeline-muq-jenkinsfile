@@ -1,19 +1,39 @@
 pipeline {
   agent any
   stages {
+
     stage('Production-deployment') {
+      when {
+        branch 'main'  // This ensures the stage runs only on the 'main' branch
+      }
+     // environment {
+     //   KUBE_CONFIG = credentials('kubeconfig-prod')  // Uncomment and use the proper credentials
+        // DOCKER_IMAGE_TAG = "${appVersion}-production-${env.BUILD_NUMBER}"  // If this variable is defined elsewhere, uncomment it
+      }
       steps {
-        input message: 'Do you approve deployment?', 
-               parameters: [
-                   choice(name: 'Approval', choices: ['Yes', 'No'], description: 'Approve or reject the production deployment')
-               ]
-        when {
-          expression { params.Approval == 'Yes' } 
-        }
-      steps {
-        sh """
-          echo "This is ok"
-        """
+        script {
+          // Adding a manual approval step with Yes and No options
+          def userInput = input(
+            message: 'Do you want to approve the deployment?',
+            parameters: [
+              choice(name: 'Approval', choices: ['Yes', 'No'], description: 'Approve or cancel the production deployment')
+            ]
+          )
+
+          // Logic to handle the user input
+          if (userInput == 'Yes') {
+            echo "User approved the deployment. Proceeding with production deployment."
+
+            sh """
+              echo "DOCKER_IMAGE_TAG in Production-deployment: ${env.DOCKER_IMAGE_TAG}" 
+              echo "ecrRepoUrl in Production-deployment: ${env.ecrRepoUrl}" 
+              sed -i "s#123456786523.dkr.ecr.us-west-2.amazonaws.com/sim-ecr:<image-tag>#${env.ecrRepoUrl}:${env.DOCKER_IMAGE_TAG}#g" k8s-manifests/deployment-prod.yml  
+
+              /opt/kubectleks/kubectl --kubeconfig $KUBE_CONFIG apply -f k8s-manifests/deployment-prod.yml
+            """
+          } else {
+            echo "User did not approve the deployment. Skipping production deployment."
+          }
         }
       }
     }
