@@ -6,10 +6,10 @@ pipeline {
       when {
         branch 'main'  // This ensures the stage runs only on the 'main' branch
       }
-     # environment {
-     #   KUBE_CONFIG = credentials('kubeconfig-prod')  // Uncomment and use the proper credentials
-        # DOCKER_IMAGE_TAG = "${appVersion}-production-${env.BUILD_NUMBER}"  // If this variable is defined elsewhere, uncomment it
-      #}
+     // environment {
+     //   KUBE_CONFIG = credentials('kubeconfig-prod')  // Uncomment and use the proper credentials
+        // DOCKER_IMAGE_TAG = "${appVersion}-production-${env.BUILD_NUMBER}"  // If this variable is defined elsewhere, uncomment it
+      //}
       steps {
         script {
           // Adding a manual approval step with Yes and No options
