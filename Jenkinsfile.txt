@@ -3,9 +3,12 @@ pipeline {
   stages {
     stage('Production-deployment') {
       steps {
-        input message: 'Do you approve deployment?', ok: 'Yes', submitterParameter: 'proceed', submitter: 'user'
+        input message: 'Do you approve deployment?', 
+               parameters: [
+                   choice(name: 'Approval', choices: ['Yes', 'No'], description: 'Approve or reject the production deployment')
+               ]
         when {
-          expression { return "${params.proceed}" == 'user' }
+          expression { params.Approval == 'Yes' } 
         }
         sh """
           echo "This is ok"
