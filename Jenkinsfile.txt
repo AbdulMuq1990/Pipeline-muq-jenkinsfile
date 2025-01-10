@@ -3,11 +3,14 @@ pipeline {
   stages {
     stage('Production-deployment') {
       steps {
-          input 'Do you approve deployment?'
-            sh """
-              echo "This is ok"
-            """
-       }
-     }
-   }
+        input message: 'Do you approve deployment?', ok: 'Yes', submitterParameter: 'proceed', submitter: 'user'
+        when {
+          expression { return "${params.proceed}" == 'user' }
+        }
+        sh """
+          echo "This is ok"
+        """
+      }
+    }
+  }
 }
