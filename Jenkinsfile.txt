@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Production-deployment') {
       when {
-        branch 'main'
+        branch 'master'
       }
       environment {
         KUBE_CONFIG = credentials('kubeconfig-es-simulation-prod')
