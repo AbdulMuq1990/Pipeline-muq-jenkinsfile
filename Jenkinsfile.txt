@@ -3,30 +3,11 @@ pipeline {
   stages {
     stage('Production-deployment') {
       steps {
-        script {
-          // Request user approval for deployment
-          def userInput = input(
-              message: 'Proceed to production deployment?',
-              parameters: [
-                  choice(name: 'Approval', choices: ['Yes', 'No'], description: 'Approve or reject the production deployment')
-              ]
-          )
-
-          if (userInput == 'Yes') {
-            echo 'User approved the deployment. Proceeding...'
-
-            // Update deployment configuration (assuming DOCKER_IMAGE_TAG and ecrRepoUrl are defined elsewhere)
-            echo "DOCKER_IMAGE_TAG in Production-deployment: ${env.DOCKER_IMAGE_TAG}"
-            echo "ecrRepoUrl in Production-deployment: ${env.ecrRepoUrl}"
+          input 'Do you approve deployment?'
             sh """
-              sed -i "s#123456786523.dkr.ecr.us-west-2.amazonaws.com/sim-ecr:<image-tag>#${env.ecrRepoUrl}:${env.DOCKER_IMAGE_TAG}#g" k8s-manifests/deployment-prod.yml
+              echo "This is ok"
             """
-
-            // Apply deployment using kubectl
-            sh """
-              /opt/kubectleks/kubectl --kubeconfig $KUBE_CONFIG apply -f k8s-manifests/deployment-prod.yml
-            """
-          } else {
+            else {
             echo 'User has rejected the deployment. Skipping production deployment.'
           }
         }
