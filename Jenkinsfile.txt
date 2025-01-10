@@ -10,9 +10,11 @@ pipeline {
         when {
           expression { params.Approval == 'Yes' } 
         }
+      steps {
         sh """
           echo "This is ok"
         """
+        }
       }
     }
   }
