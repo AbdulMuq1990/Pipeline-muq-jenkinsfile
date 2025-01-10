@@ -4,11 +4,11 @@ pipeline {
 
     stage('Production-deployment') {
       when {
-        branch 'main'  // This ensures the stage runs only on the 'main' branch
+        branch 'main' 
       }
      // environment {
-     //   KUBE_CONFIG = credentials('kubeconfig-prod')  // Uncomment and use the proper credentials
-        // DOCKER_IMAGE_TAG = "${appVersion}-production-${env.BUILD_NUMBER}"  // If this variable is defined elsewhere, uncomment it
+     //   KUBE_CONFIG = credentials('kubeconfig-prod')
+        // DOCKER_IMAGE_TAG = "${appVersion}-production-${env.BUILD_NUMBER}"
       //}
       steps {
         script {
@@ -25,8 +25,9 @@ pipeline {
             echo "User approved the deployment. Proceeding with production deployment."
 
             sh """
-              echo "DOCKER_IMAGE_TAG in Production-deployment: ${env.DOCKER_IMAGE_TAG}" 
-              echo "ecrRepoUrl in Production-deployment: ${env.ecrRepoUrl}" 
+              echo "Its success"
+              #echo "DOCKER_IMAGE_TAG in Production-deployment: ${env.DOCKER_IMAGE_TAG}" 
+              #echo "ecrRepoUrl in Production-deployment: ${env.ecrRepoUrl}" 
               #sed -i "s#123456786523.dkr.ecr.us-west-2.amazonaws.com/sim-ecr:<image-tag>#${env.ecrRepoUrl}:${env.DOCKER_IMAGE_TAG}#g" k8s-manifests/deployment-prod.yml  
 
               #/opt/kubectleks/kubectl --kubeconfig $KUBE_CONFIG apply -f k8s-manifests/deployment-prod.yml
