@@ -7,9 +7,6 @@ pipeline {
             sh """
               echo "This is ok"
             """
-            else {
-            echo 'User has rejected the deployment. Skipping production deployment.'
-         }
        }
      }
    }
