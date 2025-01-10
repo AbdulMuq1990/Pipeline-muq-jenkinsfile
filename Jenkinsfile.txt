@@ -21,7 +21,7 @@ pipeline {
             echo "User approved the deployment. Proceeding with production deployment."
 
             sh """
-              echo "Its success"
+              echo "Its successfull"
             """
           } else {
             echo "User did not approve the deployment. Skipping production deployment."
